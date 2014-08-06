@@ -1,0 +1,502 @@
+<modification>
+
+	<id>Shutter contacts Free from X Design Studio</id>
+	<version>1.0</version>
+	<vqmver>2.4.1</vqmver>
+	<author>X Design Studio (http://xds.by/)</author>
+	
+<!-- changes in the catalog header template -->
+  <file name="catalog/view/theme/xds_colormarket/template/common/header.tpl">
+		<operation>
+			<search position="before" error="log"><![CDATA[</head>]]></search>
+			<add><![CDATA[
+				<?php if ($on_off == true) {?>
+				<link rel="stylesheet" type="text/css" href="catalog/view/xds_shutter/style.css">
+				<?php }?>
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after" error="log"><![CDATA[<body]]></search>
+			<add><![CDATA[
+				<?php if ($on_off == true) {?>
+				<div id="shutter">
+					<div class="shutter-content">
+						<div class="shutter-column">
+							<div class="schedule">
+								<h3><?php echo $schedule_h3;?></h3>
+								<?php if ($receiving_orders[$lang_id]['receiving_orders'] != ''){?>
+								<p><?php echo $receiving_orders_text;?> <span><?php echo $receiving_orders[$lang_id]['receiving_orders']; ?></span></p>
+								<?php }?>
+							</div>
+						</div>
+						<div class="shutter-column">
+							<div class="phones">
+								<?php if ($phone_1 != ''){?>
+								<span class="phone-number" style="font-size: 20px; font-weight: bold;"><?php echo $phone_1; ?></span>
+								<?php }?>
+							</div>
+						</div>
+						<?php if (($email != '') or ($skype != '')) {?>
+						<div class="shutter-column">
+							<div class="internet">
+								<?php if ($email != ''){?>
+								<span class="internet-cotact"><?php echo $email_text;?> <a target="_blank" href="mailto:<?php echo $email;?>"><?php echo $email;?></a></span>
+								<?php }?>
+								<?php if ($skype != ''){?>
+								<span class="internet-cotact"><?php echo $skype_text;?> <a target="_blank" href="callto:<?php echo $skype;?>"><?php echo $skype;?></a></span>
+								<?php }?>
+							</div>
+						</div>
+						<?php }?>
+					</div>
+					<div class="rope" style="<?php echo $label_position;?>:<?php echo $px_position;?>px;">
+						<a onclick="$('#shutter').toggleClass('sh-open');"><?php echo $label_text; ?></a>
+					</div>
+
+				</div>
+				<?php }?>
+			]]></add>
+		</operation>
+	</file>
+
+<!-- changes in the catalog header controller -->
+	<file name="catalog/controller/common/header.php">
+		<operation>
+			<search position="before" error="log"><![CDATA[$this->data['text_home'] = $this->language->get('text_home');]]></search>
+			<add><![CDATA[
+				$this->data['lang_id'] = $this->config->get('config_language_id');
+				$this->data['on_off'] = $this->config->get('on_off');
+				$this->data['content_type'] = $this->config->get('content_type');
+				$this->data['schedule_h3'] = $this->language->get('schedule_h3');
+				$this->data['label_text'] = $this->language->get('label_text');
+				$this->data['receiving_orders_text'] = $this->language->get('receiving_orders_text');
+				$this->data['order_processing_text'] = $this->language->get('order_processing_text');
+				$this->data['email_text'] = $this->language->get('email_text');
+				$this->data['skype_text'] = $this->language->get('skype_text');
+				$this->data['icq_text'] = $this->language->get('icq_text');
+				$this->data['receiving_orders'] = $this->config->get('receiving_orders');
+				$this->data['order_processing'] = $this->config->get('order_processing');
+				$this->data['phone_1'] = $this->config->get('phone_1');
+				$this->data['email'] = $this->config->get('email');
+				$this->data['skype'] = $this->config->get('skype');
+			]]></add>
+		</operation>
+	</file>
+
+<!-- changes in the catalog header languages -->	
+  <file name="catalog/language/russian/common/header.php">
+		<operation>
+			<search position="after" error="log"><![CDATA[// Text]]></search>
+			<add><![CDATA[
+				$_['schedule_h3'] 					= 'Режим работы:';
+				$_['receiving_orders_text'] = 'Прием закзов:';
+				$_['order_processing_text'] = 'Обработка заказов:';
+				$_['email_text'] 						= 'E-mail:';
+				$_['skype_text'] 						= 'Skype:';
+				$_['icq_text'] 							= 'ICQ:';
+				$_['label_text'] 							= 'Контакты';
+			]]></add>
+		</operation>
+	</file>
+	<file name="catalog/language/english/common/header.php">
+		<operation>
+			<search position="after" error="log"><![CDATA[// Text]]></search>
+			<add><![CDATA[
+				$_['schedule_h3'] 					= 'Schedule of work:';
+				$_['receiving_orders_text'] = 'Receiving orders:';
+				$_['order_processing_text'] = 'Order processing:';
+				$_['email_text'] 						= 'E-mail:';
+				$_['skype_text'] 						= 'Skype:';
+				$_['icq_text'] 							= 'ICQ:';
+				$_['label_text'] 							= 'Contacts';
+			]]></add>
+		</operation>
+	</file>
+	
+<!-- changes in the admin settings template -->	
+  <file name="admin/view/template/setting/setting.tpl">
+		<operation>
+			<search position="replace " error="log"><![CDATA[
+				<div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a>
+			]]></search>
+			<add><![CDATA[
+				<div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a><a href="#tab-shutter"><?php echo $shutter_heading_title; ?></a>
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search position="before " error="log"><![CDATA[</form>]]></search>
+			<add><![CDATA[
+				<div id="tab-shutter">
+					<table class="form" style="clear: both; width: 100%">
+						<tr style="background: #eee; border-top: 1px dotted #ccc;">
+							<td><label style="background: #003A88; color: #fff; padding: 5px 15px 5px 8px; border-radius: 10px;">
+									<?php if ($on_off == true) {?>
+									<input type="checkbox" style="vertical-align: middle;" name="on_off" checked> 
+									<?php } else {?>
+									<input type="checkbox" style="vertical-align: middle;" name="on_off">
+									<?php }?>
+									<?php echo $on_off_text;?></label></td>
+							<td><?php echo $content_type_show_text;?> <select name="content_type">
+								<?php if ($content_type == 'contacts') {?>
+									<option value="contacts" selected="selected"><?php echo $content_type_contact_text;?></option>
+									<option value="html_code" disabled style="color: #aaa;"><?php echo $content_type_html_text;?> (Только в полной версии)</option>
+								<?php } else {?>
+									<option value="contacts"><?php echo $content_type_contact_text;?></option>
+									<option value="html_code" disabled style="color: #aaa;"><?php echo $content_type_html_text;?> (Только в полной версии)</option>
+								<?php }?>
+								</select></td>
+							<td><?php echo $shutter_position_text;?><select name="shutter_position">
+								<?php if ($shutter_position == 'absolute') {?>
+									<option value="absolute" selected="selected"><?php echo $shutter_position_absolute_text;?></option>
+									<option value="fixed" disabled style="color: #aaa;"><?php echo $shutter_position_fixed_text;?> (Только в полной версии)</option>
+								<?php } else {?>
+									<option value="absolute"><?php echo $shutter_position_absolute_text;?></option>
+									<option value="fixed" disabled style="color: #aaa;"><?php echo $shutter_position_fixed_text;?> (Только в полной версии)</option>
+								<?php }?>
+								</select></td>
+						</tr>
+						<tr>
+							<td><?php echo $rope_text;?></td>
+							<td>
+								<?php foreach ($languages as $language) { ?>
+								<input type="text" disabled style="color: #aaa;" value="Только в полной версии" />
+								<img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br>
+								<?php } ?>
+							</td>
+							<td><label style="color: #aaa;">
+								<input disabled type="checkbox" style="vertical-align: middle;"><?php echo $show_icon_text;?>  (Только в полной версии)
+							</label></td>
+						</tr>
+						<tr>
+							<td><?php echo $label_relativity_text;?></td>
+							<td><select name="label_relativity" disabled>
+								<?php if ($label_relativity == 'relativity_window') {?>
+									<option value="relativity_window" selected="selected"><?php echo $relativity_window_text;?></option>
+									<option value="relativity_countener" disabled style="color: #aaa;"><?php echo $relativity_countener_text;?> </option>
+								<?php } else {?>
+									<option value="relativity_window"><?php echo $relativity_window_text;?></option>
+									<option value="relativity_countener" disabled style="color: #aaa;"><?php echo $relativity_countener_text;?> (Только в полной версии)</option>
+								<?php }?>
+								</select></td>
+							<td><input type="text" disabled style="width: 50px;" name="px_position" value="<?php echo $px_position; ?>"> px <select name="label_position" disabled>
+								<?php if ($label_position == 'right:auto;left') {?>
+									<option value="right:auto;left" selected="selected"><?php echo $px_position_left; ?></option>
+									<option value="left:auto;right"><?php echo $px_position_right; ?></option>
+								<?php } elseif ($label_position == 'left:auto;right') {?>
+									<option value="right:auto;left"><?php echo $px_position_left; ?></option>
+									<option value="left:auto;right" selected="selected"><?php echo $px_position_right; ?></option>
+								<?php } else {?>
+									<option value="right:auto;left"><?php echo $px_position_left; ?></option>
+									<option value="left:auto;right"><?php echo $px_position_right; ?></option>
+								<?php }?>
+								</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Только в полной версии)</td> 
+						</tr>
+					</table>
+					
+					<span style="diaplay: block; width: 47.9%; float: left; border-right: 1px dotted #ccc; padding: 0 1%;">
+						<h2><?php echo $content_type_contact_text;?></h2>
+						<table class="form">
+							<tr><td colspan="2"><span class="help"><?php echo $contact_help_text;?></span></td></tr>
+							<tr><td colspan="2" style="background: #eee;"><h3 style="margin: 0;font-weight: normal; color: #999;"><?php echo $column_schedule_header;?></h3></td></tr>
+							<tr>
+								<td><?php echo $receiving_orders_text;?></td>
+								<td>
+									<?php foreach ($languages as $language) { ?>
+									<input type="text" name="receiving_orders[<?php echo $language['language_id']; ?>][receiving_orders]" value="<?php echo isset($receiving_orders[$language['language_id']]) ? $receiving_orders[$language['language_id']]['receiving_orders'] : ''; ?>" />
+									<img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br>
+									<?php } ?>
+								</td>
+							</tr>
+							<tr>
+								<td><?php echo $order_processing_text;?></td>
+								<td>
+									<?php foreach ($languages as $language) { ?>
+									<input type="text" disabled style="color: #aaa;" value="Только в полной версии" />
+									<img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br>
+									<?php } ?>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" style="background: #eee;"><h3 style="margin: 0;font-weight: normal; color: #999;"><?php echo $column_phones_header;?></h3></td>
+							</tr>
+							<tr>
+								<td><?php echo $phone_1_text; ?></td>
+								<td><input type="text" name="phone_1" value="<?php echo $phone_1; ?>"></td>
+							</tr>
+							<tr>
+								<td><?php echo $phone_2_text; ?></td>
+								<td><input type="text" disabled style="color: #aaa;" value="Только в полной версии"></td>
+							</tr>
+							<tr>
+								<td><?php echo $phone_3_text; ?></td>
+								<td><input type="text" disabled style="color: #aaa;"  value="Только в полной версии"></td>
+							</tr>
+							<tr>
+								<td colspan="2" style="background: #eee;"><h3 style="margin: 0;font-weight: normal; color: #999;"><?php echo $column_net_header;?></h3></td>
+							</tr>
+							<tr>
+								<td><?php echo $email_text; ?></td>
+								<td><input type="text" name="email" value="<?php echo $email; ?>"></td>
+							</tr>
+							<tr>
+								<td><?php echo $skype_text; ?></td>
+								<td><input type="text" name="skype" value="<?php echo $skype; ?>"></td>
+							</tr>
+							<tr>
+								<td><?php echo $custom_contact_text_label; ?>
+								<input type="text" disabled style="color: #aaa;"  value="Только в полной версии"></td>
+								<td><?php echo $custom_contact_label; ?>
+								<input type="text" disabled style="color: #aaa;"  value="Только в полной версии"></td>
+							</tr>
+						</table>
+					</span>
+
+					<span style="display: block; width: 47.9%; float: left; padding: 0 1%;">
+						<h2><?php echo $content_type_html_text;?></h2>
+						<table class="form">
+							<tr><td><span class="help"><?php echo $html_help_text;?></span></td></tr>
+						</table>
+						<div id="languages" class="htabs">
+							<?php foreach ($languages as $language) { ?>
+							<a href="#language<?php echo $language['language_id']; ?>"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a>
+							<?php } ?>
+						</div>
+						<?php foreach ($languages as $language) { ?>
+						<div id="language<?php echo $language['language_id']; ?>">
+							<table class="form">
+								<tr>
+									<td><textarea style="width: 90%; height: 100px; color: #aaa; font-size: 16px; padding: 10px;" name="cuctom_block[<?php echo $language['language_id']; ?>][cuctom_block]" id="cuctom_block<?php echo $language['language_id']; ?>" disabled>Возможность выводить призвольный текст или html-код в шторке доступна только в полной версии модуля...</textarea></td>
+								</tr>
+								<tr>
+									<td>Автор модуля - <a target="_blank" href="http://opencartforum.ru/user/676619-xds/">xds</a><br/><br/><b style="color: #ff0000;">ОБРАТИТЕ ВНИМАНИЕ!</b> Вы используете безплатную (ограниченную) версию opencart-модуля XDS Shutter. Если Вы хотите снять ограничения, то Вам необходимо приобрести лицензию на использование коммерческой версии модуля<br/><br/>Приобрести полную версию модуля можно по этой <a target="_blank" href="http://opencartforum.ru/files/file/1622-%D0%BA%D0%BE%D0%BD%D1%82%D0%B0%D0%BA%D1%82%D1%8B-%D0%B2-%D1%88%D0%B0%D0%BF%D0%BA%D0%B5-%D1%88%D1%82%D0%BE%D1%80%D0%BA%D0%B0-%D0%BA%D0%BE%D0%BD%D1%82%D0%B0%D0%BA%D1%82%D0%BE%D0%B2-xds-sutter/">ссылке</a></td>
+								</tr>
+							</table>
+						</div>
+						<?php } ?>
+					</span>
+				</div>
+
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after" error="log"><![CDATA[
+				$('#tabs a').tabs();
+			]]></search>
+			<add><![CDATA[
+				$('#languages a').tabs();
+			]]></add>
+		</operation>
+	</file>
+	
+<!-- changes in the admin settings controller -->
+	<file name="admin/controller/setting/setting.php">
+		<operation>
+			<search position="after" error="log"><![CDATA[
+				$this->data['heading_title'] = $this->language->get('heading_title');
+			]]></search>
+			<add><![CDATA[
+			
+				if (isset($this->request->post['receiving_orders'])) {
+					$this->data['receiving_orders'] = $this->request->post['receiving_orders'];
+				} else {
+					$this->data['receiving_orders'] = $this->config->get('receiving_orders');
+				}
+				if (isset($this->request->post['order_processing'])) {
+					$this->data['order_processing'] = $this->request->post['order_processing'];
+				} else {
+					$this->data['order_processing'] = $this->config->get('order_processing');
+				}
+				if (isset($this->request->post['content_type'])) {
+					$this->data['content_type'] = $this->request->post['content_type'];
+				} else {
+					$this->data['content_type'] = $this->config->get('content_type');
+				}
+				if (isset($this->request->post['phone_1'])) {
+					$this->data['phone_1'] = $this->request->post['phone_1'];
+				} else {
+					$this->data['phone_1'] = $this->config->get('phone_1');
+				}
+				if (isset($this->request->post['phone_2'])) {
+					$this->data['phone_2'] = $this->request->post['phone_2'];
+				} else {
+					$this->data['phone_2'] = $this->config->get('phone_2');
+				}
+				if (isset($this->request->post['phone_3'])) {
+					$this->data['phone_3'] = $this->request->post['phone_3'];
+				} else {
+					$this->data['phone_3'] = $this->config->get('phone_3');
+				}
+				if (isset($this->request->post['email'])) {
+					$this->data['email'] = $this->request->post['email'];
+				} else {
+					$this->data['email'] = $this->config->get('email');
+				}
+				if (isset($this->request->post['skype'])) {
+					$this->data['skype'] = $this->request->post['skype'];
+				} else {
+					$this->data['skype'] = $this->config->get('skype');
+				}
+				if (isset($this->request->post['custom_contact_text'])) {
+					$this->data['custom_contact_text'] = $this->request->post['custom_contact_text'];
+				} else {
+					$this->data['custom_contact_text'] = $this->config->get('custom_contact_text');
+				}
+				if (isset($this->request->post['custom_contact'])) {
+					$this->data['custom_contact'] = $this->request->post['custom_contact'];
+				} else {
+					$this->data['custom_contact'] = $this->config->get('custom_contact');
+				}
+				if (isset($this->request->post['label_text'])) {
+					$this->data['label_text'] = $this->request->post['label_text'];
+				} else {
+					$this->data['label_text'] = $this->config->get('label_text');
+				}
+				if (isset($this->request->post['cuctom_block'])) {
+					$this->data['cuctom_block'] = $this->request->post['cuctom_block'];
+				} else {
+					$this->data['cuctom_block'] = $this->config->get('cuctom_block');
+				}
+				if (isset($this->request->post['on_off'])) {
+					$this->data['on_off'] = $this->request->post['on_off'];
+				} else {
+					$this->data['on_off'] = $this->config->get('on_off');
+				}
+				if (isset($this->request->post['shutter_position'])) {
+					$this->data['shutter_position'] = $this->request->post['shutter_position'];
+				} else {
+					$this->data['shutter_position'] = $this->config->get('shutter_position');
+				}
+				if (isset($this->request->post['label_relativity'])) {
+					$this->data['label_relativity'] = $this->request->post['label_relativity'];
+				} else {
+					$this->data['label_relativity'] = $this->config->get('label_relativity');
+				}
+				if (isset($this->request->post['px_position'])) {
+					$this->data['px_position'] = $this->request->post['px_position'];
+				} else {
+					$this->data['px_position'] = $this->config->get('px_position');
+				}
+				if (isset($this->request->post['label_position'])) {
+					$this->data['label_position'] = $this->request->post['label_position'];
+				} else {
+					$this->data['label_position'] = $this->config->get('label_position');
+				}
+				if (isset($this->request->post['show_icon'])) {
+					$this->data['show_icon'] = $this->request->post['show_icon'];
+				} else {
+					$this->data['show_icon'] = $this->config->get('show_icon');
+				}
+				$this->data['shutter_heading_title'] = $this->language->get('shutter_heading_title');
+				$this->data['on_off_text'] = $this->language->get('on_off_text');
+				$this->data['content_type_show_text'] = $this->language->get('content_type_show_text');
+				$this->data['content_type_contact_text'] = $this->language->get('content_type_contact_text');
+				$this->data['content_type_html_text'] = $this->language->get('content_type_html_text');
+				$this->data['shutter_position_text'] = $this->language->get('shutter_position_text');
+				$this->data['shutter_position_absolute_text'] = $this->language->get('shutter_position_absolute_text');
+				$this->data['shutter_position_fixed_text'] = $this->language->get('shutter_position_fixed_text');
+				$this->data['rope_text'] = $this->language->get('rope_text');
+				$this->data['show_icon_text'] = $this->language->get('show_icon_text');
+				$this->data['label_relativity_text'] = $this->language->get('label_relativity_text');
+				$this->data['relativity_window_text'] = $this->language->get('relativity_window_text');
+				$this->data['relativity_countener_text'] = $this->language->get('relativity_countener_text');
+				$this->data['px_position_left'] = $this->language->get('px_position_left');
+				$this->data['px_position_right'] = $this->language->get('px_position_right');
+				$this->data['contact_help_text'] = $this->language->get('contact_help_text');
+				$this->data['html_help_text'] = $this->language->get('html_help_text');
+				$this->data['column_schedule_header'] = $this->language->get('column_schedule_header');
+				$this->data['column_phones_header'] = $this->language->get('column_phones_header');
+				$this->data['column_net_header'] = $this->language->get('column_net_header');
+				$this->data['receiving_orders_text'] = $this->language->get('receiving_orders_text');
+				$this->data['order_processing_text'] = $this->language->get('order_processing_text');
+				$this->data['phone_1_text'] = $this->language->get('phone_1_text');
+				$this->data['phone_2_text'] = $this->language->get('phone_2_text');
+				$this->data['phone_3_text'] = $this->language->get('phone_3_text');
+				$this->data['email_text'] = $this->language->get('email_text');
+				$this->data['skype_text'] = $this->language->get('skype_text');
+				$this->data['custom_contact_text_label'] = $this->language->get('custom_contact_text_label');
+				$this->data['custom_contact_label'] = $this->language->get('custom_contact_label');
+				
+			]]></add>
+		</operation>
+	</file>
+	
+<!-- changes in the admin settings controller -->		
+	<file name="admin/language/russian/setting/setting.php">
+		<operation>
+			<search position="after" error="log"><![CDATA[// Text]]></search>
+			<add><![CDATA[
+			
+				$_['shutter_heading_title']    				= 'Шторка';
+				$_['on_off_text']             				= 'Включить шторку';
+				$_['content_type_show_text']  				= 'Показать: ';
+				$_['content_type_contact_text'] 			= 'Контактные данные';
+				$_['content_type_html_text'] 					= 'Произвольный текст или HTML-код';
+				$_['shutter_position_text'] 					= 'Позицианирование штроки: ';
+				$_['shutter_position_absolute_text'] 	= 'Абсолютное';
+				$_['shutter_position_fixed_text'] 		= 'Фиксированное';
+				$_['rope_text'] 											= 'Текст на ярлычке:';
+				$_['show_icon_text'] 									= 'Скрыть иконку слева на ярлычке';
+				$_['label_relativity_text'] 					= 'Положение ярлычка по горизонтали: ';
+				$_['relativity_window_text'] 					= 'Относительно окна';
+				$_['relativity_countener_text'] 			= 'Относительно контейнера';
+				$_['px_position_left'] 								= 'Слева';
+				$_['px_position_right'] 							= 'Справа';
+				$_['contact_help_text'] 							= 'Поля, которые не нужно отображать в модуле оставьте пустыми.';
+				$_['html_help_text'] 							    = 'В этом блоке Вы можете создать собственный вариант отображения контента в шторке. Для того что бы вставить в шторку собственный текст воспользуйтесь редактором текста. Для того что бы вставить свой html-код нажмите в редакторе кнопку "Источник".';
+				$_['column_schedule_header'] 					= 'Режим работы';
+				$_['column_phones_header'] 						= 'Контактные телефоны';
+				$_['column_net_header'] 							= 'Контакты в сети';
+				$_['receiving_orders_text'] 					= 'Прием заказов:<br><span class="help">Например "Круглосуточно"</span>';
+				$_['order_processing_text'] 					= 'Обработка заказов:<br><span class="help">Например "с 9:00 до 21:00"</span>';
+				$_['phone_1_text'] 										= 'Контактный телефон №1';
+				$_['phone_2_text'] 										= 'Контактный телефон №2';
+				$_['phone_3_text'] 										= 'Контактный телефон №3';
+				$_['email_text'] 											= 'E-mail: <br><span class="help">Например "info@shop.com"</span>';
+				$_['skype_text'] 											= 'Skype: <br><span class="help">Например "skipemagazina14"</span>';
+				$_['custom_contact_text_label'] 			= 'Произвольный контакт:<br><span class="help">Например "В Контакте: "</span>';
+				$_['custom_contact_label'] 			      = 'Адрес контакта:<br><span class="help">Например "vk.com/moymagazin"</span>';
+				
+			]]></add>
+		</operation>
+	</file>
+	<file name="admin/language/english/setting/setting.php">
+		<operation>
+			<search position="after" error="log"><![CDATA[// Text]]></search>
+			<add><![CDATA[
+			
+				$_['shutter_heading_title']    				= 'Shutter';
+				$_['on_off_text']             				= 'Enable shutter';
+				$_['content_type_show_text']  				= 'Show: ';
+				$_['content_type_contact_text'] 			= 'Contact details';
+				$_['content_type_html_text'] 					= 'Custom text or HTML-Code';
+				$_['shutter_position_text'] 					= 'Shutter position: ';
+				$_['shutter_position_absolute_text'] 	= 'Absolute';
+				$_['shutter_position_fixed_text'] 		= 'Fixed';
+				$_['rope_text'] 											= 'Label text: ';
+				$_['show_icon_text'] 									= 'Hide icon on the left of the label';
+				$_['label_relativity_text'] 					= 'Horizontal position of the label: ';
+				$_['relativity_window_text'] 					= 'Relative to the window';
+				$_['relativity_countener_text'] 			= 'Relative to the container';
+				$_['px_position_left'] 								= 'Left';
+				$_['px_position_right'] 							= 'Right';
+				$_['contact_help_text'] 							= 'Fields that do not want to display in the module leave blank.';
+				$_['html_help_text'] 							    = 'In this unit, you can create your own version of the content display in the curtain. In order to be inserted into the blind own text, use a text editor. In order to insert your html-code in the editor, press the "Source".';
+				$_['column_schedule_header'] 					= 'Schedule of work';
+				$_['column_phones_header'] 						= 'Contact phones';
+				$_['column_net_header'] 							= 'Contacts Online';
+				$_['receiving_orders_text'] 					= 'Receiving orders:<br><span class="help">example "Round the clock"</span>';
+				$_['order_processing_text'] 					= 'Order Processing:<br><span class="help">example "с 9:00 до 21:00"</span>';
+				$_['phone_1_text'] 										= 'Contact phone №1';
+				$_['phone_2_text'] 										= 'Contact phone №2';
+				$_['phone_3_text'] 										= 'Contact phone №3';
+				$_['email_text'] 											= 'E-mail: <br><span class="help">example "info@shop.com"</span>';
+				$_['skype_text'] 											= 'Skype: <br><span class="help">example "skipemagazina14"</span>';
+				$_['custom_contact_text_label'] 			= 'Custom contact:<br><span class="help">example "FaceBook: "</span>';
+				$_['custom_contact_label'] 			      = 'Address of contact:<br><span class="help">example "vk.com/moymagazin"</span>';
+				
+			]]></add>
+		</operation>
+	</file>
+
+</modification>

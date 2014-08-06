@@ -1,0 +1,49 @@
+<div class="box">
+  <div class="box-heading"><?php echo $heading_title; ?></div>
+  <div class="box-content" style="background:color background-color: #FEF6D9;
+">
+  <ul class="box-category">
+    <?php  
+$this->load->model('catalog/category');
+$this->load->model('catalog/product');
+ 
+$categories_1 = $this->model_catalog_category->getCategories(0);  											
+if ($categories_1) {$output = '<ul class="glossycategory" id="verticalmenu">';}  															
+
+foreach ($categories_1 as $category_1) {																			
+	$output .= '<li>';																					
+	$unrewritten  = $this->url->link('product/category', 'path=' . $category_1['category_id']);
+	$output .= '<a href="'.($unrewritten).'">' . $category_1['name'] . '</a>';			
+ 
+	$categories_2 = $this->model_catalog_category->getCategories($category_1['category_id']);								
+ 
+	if ($categories_2) {$output .= '<ul>';}												
+ 
+	foreach ($categories_2 as $category_2) {																
+		$output .= '<li>';																																	
+		$sub_unrewritten = $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id']);
+		$output .= '<a href="'.($sub_unrewritten).'">'. $category_2['name'] . '</a>';			
+		
+		$categories_3 = $this->model_catalog_category->getCategories($category_2['category_id']);				
+ 
+		if ($categories_3) {$output .= '<ul>';}									
+ 
+		foreach ($categories_3 as $category_3) {												
+			$output .= '<li>';																			
+			$third_sub_unrewritten = $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'] . '_' . $category_3['category_id']);
+			$output .= '<a href="'.($third_sub_unrewritten).'">'.$category_3['name'].'</a>';
+			$output .= '</li>';																			
+		}
+ 
+		if ($categories_3) {$output .= '</ul>';}
+			$output .= '</li>';
+	}
+	if ($categories_2) {$output .= '</ul>';}
+		$output .= '</li>';
+}
+if ($categories_1) {$output .= '</ul>';}
+echo $output;
+?>
+  </ul>
+  </div>
+</div>

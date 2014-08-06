@@ -17,6 +17,7 @@ class ControllerModuleCart extends Controller {
 		$taxes = $this->cart->getTaxes();
 		
 		// Display prices
+
 		if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
 			$sort_order = array(); 
 			
@@ -66,6 +67,7 @@ class ControllerModuleCart extends Controller {
 			} else {
 				$image = '';
 			}
+
 							
 			$option_data = array();
 			
@@ -107,8 +109,9 @@ class ControllerModuleCart extends Controller {
 				'option'   => $option_data,
 				'quantity' => $product['quantity'],
 				'price'    => $price,	
-				'total'    => $total,	
-				'href'     => $this->url->link('product/product', 'product_id=' . $product['product_id'])		
+				'total'    => $total,
+                'ves'      => $product['weight'],
+				'href'     => $this->url->link('product/product', 'product_id=' . $product['product_id'])
 			);
 		}
 		
@@ -128,7 +131,10 @@ class ControllerModuleCart extends Controller {
 		$this->data['cart'] = $this->url->link('checkout/cart');
 						
 		$this->data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');
-	
+
+        if(!isset($this->data['weight'])) $this->data['weight'] = "";
+        $this->data['weight'] .= $this->weight->format($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->language->get('decimal_point'), $this->language->get('thousand_point'));
+
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/cart.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/module/cart.tpl';
 		} else {

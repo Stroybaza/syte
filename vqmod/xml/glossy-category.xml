@@ -1,0 +1,18 @@
+<modification>
+	<id><![CDATA[add callback css file]]></id>
+	<version><![CDATA[1.0]]></version>
+	<vqmver><![CDATA[2.1.7]]></vqmver>
+	<author><![CDATA[tulip_craft]]></author>
+	<file name="catalog/view/theme/xds_colormarket/template/common/header.tpl">
+		<operation>
+			<search position="before" error="log"><![CDATA[</head>]]></search>
+			<add><![CDATA[<link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/glossycategory.css"/>
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before" error="log"><![CDATA[</head>]]></search>
+			<add><![CDATA[<script type="text/javascript" src="catalog/view/javascript/glossycategory.js"></script>
+			]]></add>
+		</operation>
+	</file>
+</modification>

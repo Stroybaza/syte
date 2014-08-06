@@ -25,7 +25,7 @@ $_['text_error']            = 'Заказ не найден!';
 
 // Column
 $_['column_name']           = 'Наименование товара';
-$_['column_model']          = 'Модель';
+$_['column_model']          = 'Артикул';
 $_['column_quantity']       = 'Количество';
 $_['column_price']          = 'Цена';
 $_['column_total']          = 'Итого';

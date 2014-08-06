@@ -17,9 +17,9 @@ class ControllerModuleSpecial extends Controller {
 			'sort'  => 'pd.name',
 			'order' => 'ASC',
 			'start' => 0,
-			'limit' => $setting['limit']
+			'limit' => 10
 		);
-
+//$setting['limit']
 		$results = $this->model_catalog_product->getProductSpecials($data);
 
 		foreach ($results as $result) {

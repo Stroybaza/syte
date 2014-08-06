@@ -122,7 +122,7 @@ class ControllerCheckoutConfirm extends Controller {
 				$data['lastname'] = $this->customer->getLastName();
 				$data['email'] = $this->customer->getEmail();
 				$data['telephone'] = $this->customer->getTelephone();
-				$data['fax'] = $this->customer->getFax();
+				//$data['fax'] = $this->customer->getFax();
 			
 				$this->load->model('account/address');
 				
@@ -134,20 +134,20 @@ class ControllerCheckoutConfirm extends Controller {
 				$data['lastname'] = $this->session->data['guest']['lastname'];
 				$data['email'] = $this->session->data['guest']['email'];
 				$data['telephone'] = $this->session->data['guest']['telephone'];
-				$data['fax'] = $this->session->data['guest']['fax'];
+//				$data['fax'] = $this->session->data['guest']['fax'];
 				
 				$payment_address = $this->session->data['guest']['payment'];
 			}
 			
 			$data['payment_firstname'] = $payment_address['firstname'];
 			$data['payment_lastname'] = $payment_address['lastname'];	
-			$data['payment_company'] = $payment_address['company'];	
-			$data['payment_company_id'] = $payment_address['company_id'];	
-			$data['payment_tax_id'] = $payment_address['tax_id'];	
+			//$data['payment_company'] = $payment_address['company'];	
+			//$data['payment_company_id'] = $payment_address['company_id'];	
+			//$data['payment_tax_id'] = $payment_address['tax_id'];	
 			$data['payment_address_1'] = $payment_address['address_1'];
-			$data['payment_address_2'] = $payment_address['address_2'];
+			//$data['payment_address_2'] = $payment_address['address_2'];
 			$data['payment_city'] = $payment_address['city'];
-			$data['payment_postcode'] = $payment_address['postcode'];
+			//$data['payment_postcode'] = $payment_address['postcode'];
 			$data['payment_zone'] = $payment_address['zone'];
 			$data['payment_zone_id'] = $payment_address['zone_id'];
 			$data['payment_country'] = $payment_address['country'];
@@ -177,11 +177,11 @@ class ControllerCheckoutConfirm extends Controller {
 				
 				$data['shipping_firstname'] = $shipping_address['firstname'];
 				$data['shipping_lastname'] = $shipping_address['lastname'];	
-				$data['shipping_company'] = $shipping_address['company'];	
+//				$data['shipping_company'] = $shipping_address['company'];	
 				$data['shipping_address_1'] = $shipping_address['address_1'];
-				$data['shipping_address_2'] = $shipping_address['address_2'];
+//				$data['shipping_address_2'] = $shipping_address['address_2'];
 				$data['shipping_city'] = $shipping_address['city'];
-				$data['shipping_postcode'] = $shipping_address['postcode'];
+//				$data['shipping_postcode'] = $shipping_address['postcode'];
 				$data['shipping_zone'] = $shipping_address['zone'];
 				$data['shipping_zone_id'] = $shipping_address['zone_id'];
 				$data['shipping_country'] = $shipping_address['country'];

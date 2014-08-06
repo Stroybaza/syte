@@ -76,6 +76,7 @@ class ControllerCheckoutShippingAddress extends Controller {
 		
 		$json = array();
 		
+
 		// Validate if customer is logged in.
 		if (!$this->customer->isLogged()) {
 			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');

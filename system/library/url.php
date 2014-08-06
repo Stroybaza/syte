@@ -26,6 +26,15 @@ class Url {
 			$url .= str_replace('&', '&amp;', '&' . ltrim($args, '&')); 
 		}
 		
+		//Kogan
+		else { 
+	     if($route == 'common/home') { 
+	        if($connection == 'NONSSL') { return HTTP_SERVER; } 
+	        else { return HTTPS_SERVER; } 
+	      } 
+	    } 
+
+		
 		foreach ($this->rewrite as $rewrite) {
 			$url = $rewrite->rewrite($url);
 		}

@@ -18,7 +18,7 @@ $_['text_hidelink']          = 'Показать / Скрыть';
 
 // Column
 $_['column_name']            = 'Название товара';
-$_['column_model']           = 'Модель';
+$_['column_model']           = 'Артикул';
 $_['column_image']           = 'Изображение';
 $_['column_price']           = 'Цена на сайте';
 $_['column_quantity']        = 'Количество';
@@ -34,7 +34,7 @@ $_['entry_meta_description'] = 'Мета-тег Description:';
 $_['entry_description']      = 'Описание:';
 $_['entry_store']            = 'Магазины:';
 $_['entry_keyword']          = 'SEO URL:<br/><span class="help">Должно быть уникальным на всю систему.</span>';
-$_['entry_model']            = 'Модель:';
+$_['entry_model']            = 'Артикул:';
 $_['entry_sku']              = 'Артикул (SKU, код производителя):';
 $_['entry_upc']              = 'UPC:<br/><span class="help">Универсальный код товара</span>';
 $_['entry_ean']              = 'EAN:<br/><span class="help">Европейский артикул</span>';
@@ -90,5 +90,5 @@ $_['entry_seo_h1']           = 'HTML-тег H1:';
 $_['error_warning']          = 'Внимательно проверьте форму на ошибки!';
 $_['error_permission']       = 'У Вас нет прав для изменения товаров!';
 $_['error_name']             = 'Название товара должно быть от 3 до 255 символов!';
-$_['error_model']            = 'Модель товара должна быть от 3 до 64 символов!';
+$_['error_model']            = 'Артикул товара должен быть от 3 до 64 символов!';
 ?>

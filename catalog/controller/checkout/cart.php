@@ -506,6 +506,8 @@ class ControllerCheckoutCart extends Controller {
 	public function add() {
 		$this->language->load('checkout/cart');
 		
+
+
 		$json = array();
 		
 		if (isset($this->request->post['product_id'])) {
@@ -524,6 +526,8 @@ class ControllerCheckoutCart extends Controller {
 			} else {
 				$quantity = 1;
 			}
+
+
 														
 			if (isset($this->request->post['option'])) {
 				$option = array_filter($this->request->post['option']);

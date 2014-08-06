@@ -112,7 +112,7 @@ function getURLVar(key) {
 
 function addToCart(product_id, quantity) {
 	quantity = typeof(quantity) != 'undefined' ? quantity : 1;
-
+//	alert(quantity);
 	$.ajax({
 		url: 'index.php?route=checkout/cart/add',
 		type: 'post',
@@ -132,7 +132,7 @@ function addToCart(product_id, quantity) {
 				
 				$('#cart-total').html(json['total']);
 				
-				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
+				//$('html, body').animate({ scrollTop: 0 }, 'slow');
 			}	
 		}
 	});
@@ -153,7 +153,7 @@ function addToWishList(product_id) {
 				
 				$('#wishlist-total').html(json['total']);
 				
-				$('html, body').animate({ scrollTop: 0 }, 'slow');
+				//$('html, body').animate({ scrollTop: 0 }, 'slow');
 			}	
 		}
 	});
@@ -175,7 +175,7 @@ function addToCompare(product_id) {
 				
 				$('#compare-total').html(json['total']);
 				
-				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
+				//$('html, body').animate({ scrollTop: 0 }, 'slow');
 			}	
 		}
 	});

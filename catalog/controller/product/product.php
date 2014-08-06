@@ -4,7 +4,10 @@ class ControllerProductProduct extends Controller {
 	
 	public function index() { 
 		$this->language->load('product/product');
-	
+		//kogan
+		$this->language->load('product/compare');
+		//kogan
+
 		$this->data['breadcrumbs'] = array();
 
 		$this->data['breadcrumbs'][] = array(
@@ -259,7 +262,16 @@ class ControllerProductProduct extends Controller {
 			$this->data['text_share'] = $this->language->get('text_share');
 			$this->data['text_wait'] = $this->language->get('text_wait');
 			$this->data['text_tags'] = $this->language->get('text_tags');
-			
+			//kogan
+			$this->data['text_weight_and_dim'] = $this->language->get('text_weight_and_dim');
+			$this->data['text_weight']         = $this->language->get('text_weight');
+			$this->data['text_dimension']      = $this->language->get('text_dimension');			
+
+			$this->data['weight'] = $this->weight->format($product_info['weight'], $product_info['weight_class_id']);
+			$this->data['length'] = $this->length->format($product_info['length'], $product_info['length_class_id']);
+			$this->data['width']  = $this->length->format($product_info['width'], $product_info['length_class_id']);
+			$this->data['height'] = $this->length->format($product_info['height'], $product_info['length_class_id']);
+			//kogan
 			$this->data['entry_name'] = $this->language->get('entry_name');
 			$this->data['entry_review'] = $this->language->get('entry_review');
 			$this->data['entry_rating'] = $this->language->get('entry_rating');

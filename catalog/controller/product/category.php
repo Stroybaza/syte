@@ -1,6 +1,33 @@
 <?php 
-class ControllerProductCategory extends Controller {  
-	public function index() { 
+class ControllerProductCategory extends Controller {
+    //kogan
+    public function wrapText($text){
+        return $text;
+        $max_len = 20;
+        $strings_count = 0; //string count
+        $exploded_text = explode(" ", $text);
+        $text = array();
+        $return_text = '';
+        $text[$strings_count]='';
+        for ($i = 0; $i < count($exploded_text); $i++)
+        {
+            $cur_str = $text[$strings_count];
+            $string_length = strlen($cur_str);
+            $word = $exploded_text[$i];
+            $l = $string_length + strlen($word);
+            if ($l > $max_len) {
+                $text[$strings_count] = $text[$strings_count] .' '. $word . '<br>';
+                $strings_count++;
+                $text[$strings_count]='';
+            }
+            else $text[$strings_count] = $text[$strings_count] .' '. $word;
+        }
+        for($i=0;$i<count($text);$i++)  $return_text.= $text[$i];
+        return $return_text;
+
+    }
+
+    public function index() {
 		$this->language->load('product/category');
 		
 		$this->load->model('catalog/category');
@@ -79,7 +106,7 @@ class ControllerProductCategory extends Controller {
 				}
 									
 				$category_info = $this->model_catalog_category->getCategory($path_id);
-				
+
 				if ($category_info) {
 	       			$this->data['breadcrumbs'][] = array(
    	    				'text'      => $category_info['name'],
